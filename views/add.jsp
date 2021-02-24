@@ -38,12 +38,13 @@
 				type: 'post', //보낼데이터의 method
 				contentType:'application/json',//json형태로 데이터 서버로 보냄
 				url:'/item/item/', //매핑url
-				data: JSON.stringify({itemcode:itemcode,itemname:itemname,price:price,bigo:bigo}), //json문자열 표기법
-//				data: JSON.stringify({itemcode,itemname,price,bigo}), //json문자열 표기법
+//				data: JSON.stringify({itemcode:itemcode,itemname:itemname,price:price,bigo:bigo}), //json문자열 표기법
+				data: JSON.stringify({itemcode,itemname,price,bigo}), //json문자열 표기법
 				dataType: 'text', //받을데이터의 형식
 				success: function(result) { //성공시 실행할 함수
 					alert(result);
 					$('#msg').text(result);
+					$(location).attr('href', '/item/item/list');
 				},
 				error: function(result) { //실패시 실행할 함수
 					alert('error');

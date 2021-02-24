@@ -23,6 +23,23 @@ public class ItemDAOImpl implements ItemDAO{
 	public List<ItemDTO> selectList(Map map) {
 		return session.selectList("org.spring.item.ItemMapper.selectList", map);
 	}
+
+	@Override
+	public ItemDTO selectOne(String itemcode) {
+		return session.selectOne("org.spring.item.ItemMapper.selectOne", itemcode);
+	}
+
+	@Override
+	public void update(ItemDTO idto) {
+		session.selectOne("org.spring.item.ItemMapper.update", idto);
+		
+	}
+
+	@Override
+	public void delete(String itemcode) {
+		session.delete("org.spring.item.ItemMapper.delete", itemcode);
+		
+	}
 	
 
 }

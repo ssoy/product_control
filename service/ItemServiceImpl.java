@@ -1,6 +1,5 @@
 package org.spring.item.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,17 +17,25 @@ public class ItemServiceImpl implements ItemService{
 	@Override
 	public void insert(ItemDTO idto) {
 		idao.insert(idto);
+	}
+	@Override
+	public List<ItemDTO> selectList(Map<String, String> findMap) {
+		
+		return idao.selectList(findMap);
+	}
+	@Override
+	public ItemDTO selectOne(String itemcode) {
+		
+		return idao.selectOne(itemcode);
+	}
+	@Override
+	public void update(ItemDTO idto) {
+		idao.update(idto);
 		
 	}
-
 	@Override
-	public List<ItemDTO> selectList(String findKey, String findValue) {
-		// findKey, findValue : map¿∏∑Œ
-		Map<String,String> map = new HashMap<>();
-		map.put("findKey",findKey);
-		map.put("findValue",findValue);
-		
-		return idao.selectList(map);
+	public void delete(String itemcode) {
+		idao.delete(itemcode);
 	}
 	
 }

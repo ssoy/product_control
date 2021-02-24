@@ -1,12 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="include.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>리스트</title>
 <script type="text/javascript" src="/item/resources/js/jquery-3.5.1.js"></script>
+<!-- 핸들바 탬플릿 cdn추가 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+ <!-- 탬플릿 소스2 -->
+ <script id="template_source" type="text/x-handlebars-template">
+        <table border="1">
+            <tr>
+                <th>상품코드</th>
+                <th>상품명</th>
+                <th>단가</th>
+                <th>비고</th>
+                <th>등록일자</th>
+            </tr>
+            {{#each.}}
+                <tr>
+                    <td><a href='/item/item/{{itemcode}}'>{{itemcode}}</a></td>
+                    <td>{{itemname}}</td>
+                    <td>{{price}}</td>
+                    <td>{{bigo}}</td>
+                    <td>{{regdate}}</td>
+                </tr>
+            {{/each}}
+        </table>
+</script>
 <script type="text/javascript">
 	$(function() {
 		//버튼을 클릭했을때
@@ -23,8 +45,12 @@
 				data: {findKey,findValue}, //key와 값이 같을때 한쪽은 생략 가능
 				dataType:'json', //돌려받는 데이터 형태
 				success: function(result) {
-					alert('success!');
+					//alert('success!');
 					console.log(result);
+					//태플릿을 이용하여 화면에 출력
+					var source = $('#template_source').html();
+		            var template = Handlebars.compile(source);
+		            $('div').html(template(result));
 				},
 				error: function(result) {
 					alert('error!');
@@ -34,6 +60,14 @@
 			});
 			
 		});
+		
+		//등록
+		$('#btnAdd').click(function() {
+			$(location).attr('href','/item/item/');
+		});
+		
+		
+		$('#btnList').trigger('click');	//강제로 click이벤트 발생
 		
 		
 	});
@@ -48,23 +82,10 @@
 	</select>
 	<input type="text" id="findValue">
 	<button id="btnList">조회</button>
+	<button id="btnAdd">등록</button>
 	
-	<table border="1">
-		<tr>
-			<th>번호</th>
-			<th>상품코드</th>
-			<th>상품명</th>
-			<th>가격</th>
-			<th>비고</th>
-		</tr>
-		<c:forEach var="item" items="${list}" varStatus="status"> 
-			<tr>
-				<td>${status.count}</td>
-				<td>%{item.itemcode}</td>
-				<td>%{item.itemname}</td>
-				<td>%{item.price}</td>
-				<td>%{item.bigo}</td>
-			</tr>
-		</c:forEach>
+	<div>
+	</div>
+	
 </body>
 </html>
